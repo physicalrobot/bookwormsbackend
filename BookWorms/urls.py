@@ -19,8 +19,10 @@ from django.views.generic import TemplateView
 from django.conf.urls.static import static
 from django.conf import settings
 
+from BookShelvesApp.views import BookShelfViewSet
 from  ReviewsApp.views  import  ReviewViewSet
 from BooksApp.views import BookViewSet
+from BookShelvesApp.views import BookShelfViewSet
 from rest_framework  import  routers
 
 
@@ -33,14 +35,21 @@ books.register('books',BookViewSet)
 reviews = routers.DefaultRouter()
 reviews.register('reviews',ReviewViewSet)
 
+
+bookshelf = routers.DefaultRouter()
+bookshelf.register('bookshelf',BookShelfViewSet)
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/',include('UsersApp.urls')),
     # path('', TemplateView.as_view(template_name= "index.html")),
 
 
     # path('',  include('BooksApp.urls')),
     path('',include(books.urls)),
-    path('',include(reviews.urls))
+    path('',include(reviews.urls)),
+    path('',include(bookshelf.urls)),
+    path('bookshelves/',include('BookShelvesApp.urls'))
 
 
 ]  +  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

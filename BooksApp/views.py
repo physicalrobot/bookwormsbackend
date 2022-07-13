@@ -8,13 +8,14 @@ from rest_framework import viewsets
 from BooksApp.models import Book
 from BooksApp.serializers import BookSerializer
 from  django.http  import HttpResponse 
-
+from  rest_framework.decorators import api_view, permission_classes
+from  rest_framework.permissions import IsAuthenticated
 from django.core.files.storage import  default_storage
 
 
 
-
 class BookViewSet(viewsets.ModelViewSet):
+    # user = request.user
     queryset = Book.objects.all()
     serializer_class =  BookSerializer
 
