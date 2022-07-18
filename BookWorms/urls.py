@@ -20,36 +20,38 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from BookShelvesApp.views import BookShelfViewSet
-from  ReviewsApp.views  import  ReviewViewSet
+from ReviewsApp.views import ReviewViewSet
 from BooksApp.views import BookViewSet
 from BookShelvesApp.views import BookShelfViewSet
-from rest_framework  import  routers
+from rest_framework import routers
 
 
-from  django.conf.urls import include
+from django.conf.urls import include
 
 books = routers.DefaultRouter()
-books.register('books',BookViewSet)
+books.register('books', BookViewSet)
 
 
 reviews = routers.DefaultRouter()
-reviews.register('reviews',ReviewViewSet)
+reviews.register('reviews', ReviewViewSet)
 
 
 bookshelf = routers.DefaultRouter()
-bookshelf.register('bookshelf',BookShelfViewSet)
+bookshelf.register('bookshelf', BookShelfViewSet)
+
+account = routers.DefaultRouter()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/',include('UsersApp.urls')),
+    path('api/', include('UsersApp.urls')),
     # path('', TemplateView.as_view(template_name= "index.html")),
 
 
     # path('',  include('BooksApp.urls')),
-    path('',include(books.urls)),
-    path('',include(reviews.urls)),
-    path('',include(bookshelf.urls)),
-    path('bookshelves/',include('BookShelvesApp.urls'))
+    path('', include(books.urls)),
+    path('', include(reviews.urls)),
+    path('', include(bookshelf.urls)),
+    path('bookshelves/', include('BookShelvesApp.urls'))
 
 
-]  +  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
