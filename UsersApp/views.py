@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-from xtyping import null
+from BookShelvesApp.serializers import BookShelfSerializer
 
 # from UsersApp.serializer import AccountSerializer
 # from .models import Account

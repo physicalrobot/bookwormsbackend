@@ -1,10 +1,11 @@
 from django.db import models
 from BooksApp.models import Book
+from django.contrib.auth.models import User
+
 
 # Create your models here.
 
 
 class BookShelf(models.Model):
-    BookShelfId = models.AutoField(primary_key=True)
-    # user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     books = models.ManyToManyField(Book)

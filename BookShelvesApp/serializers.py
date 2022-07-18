@@ -5,6 +5,4 @@ from BookShelvesApp.models import BookShelf
 class BookShelfSerializer(serializers.ModelSerializer):
     class Meta:
         model = BookShelf
-        fields = ('BookShelfId',
-                  'books',
-                  )
+        fields = ('__all__')

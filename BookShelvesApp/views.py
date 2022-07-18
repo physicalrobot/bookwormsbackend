@@ -9,6 +9,8 @@ from rest_framework.decorators import api_view, permission_classes
 
 from django.core.files.storage import default_storage
 from rest_framework import viewsets
+from django.contrib.auth import get_user_model
+
 # Create your views here.
 
 
@@ -20,17 +22,8 @@ class BookShelfViewSet(viewsets.ModelViewSet):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getBookShelves(request):
+    # user = get_user_model()
     user = request.user
-    bookshelves = user.bookshelf.all()
+    bookshelves = user.bookshelf_set.all()
     serializer = BookShelfSerializer(bookshelves, many=True)
     return Response(serializer.data)
-
-    return Response(routes)
-    # def post(self,request, *args,**kwargs):
-    #     rating  =  request.data['ReviewRating']
-    #     body = request.data['ReviewBody']
-    #     title  =  request.data['ReviewBook']
-
-    #     Review.objects.create(ReviewBody=body, ReviewBook=title,ReviewRating= rating)
-
-    #     return  HttpResponse({'message':'Review created'},  status=200)
