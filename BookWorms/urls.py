@@ -28,6 +28,8 @@ from rest_framework import routers
 
 from django.conf.urls import include
 
+from UsersApp.views import AccountViewSet
+
 books = routers.DefaultRouter()
 books.register('books', BookViewSet)
 
@@ -40,6 +42,7 @@ bookshelf = routers.DefaultRouter()
 bookshelf.register('bookshelf', BookShelfViewSet)
 
 account = routers.DefaultRouter()
+account.register('account', AccountViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -51,6 +54,7 @@ urlpatterns = [
     path('', include(books.urls)),
     path('', include(reviews.urls)),
     path('', include(bookshelf.urls)),
+    path('', include(account.urls)),
     path('bookshelves/', include('BookShelvesApp.urls'))
 
 

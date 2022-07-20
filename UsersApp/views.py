@@ -3,13 +3,18 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-
+import json
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from BookShelvesApp.serializers import BookShelfSerializer
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
+from django.core.serializers import serialize
+
+from UsersApp.serializer import AccountSerializer
 from .models import Account
+from django.core import serializers
+from django.http import HttpResponse
 
 
 # from UsersApp.serializer import AccountSerializer
@@ -54,7 +59,26 @@ def getRoutes(request):
 # @permission_classes([IsAuthenticated])
 
 
+class AccountViewSet(viewsets.ModelViewSet):
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+
+
 @api_view(['GET'])
 def getUser(request):
-    users = list(Account.objects.values())
-    return JsonResponse(users, safe=False)
+
+    qs = Account.objects.all()
+    data = serialize("json", qs)
+
+    return HttpResponse(data, content_type="application/json")
+
+
+def get_User(request):
+    serializer_class = AccountSerializer
+
+    users = Account.objects.all()
+
+    serialized_users = serialize('json', users)
+    return HttpResponse(serialized_users, content_type="application/json")
+
+
