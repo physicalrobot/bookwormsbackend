@@ -4,20 +4,22 @@ from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 # from .forms import CustomUserCreationForm, MyUserChangeForm
 from django.contrib.auth.admin import UserAdmin
+from UsersApp.models import Account
 
 
-# class AccountInLine(admin.StackedInline):
-#     model = Account
-#     can_delete = False
-#     verbose_name_plural = 'Accounts'
+class AccountInLine(admin.StackedInline):
+    model = Account
+    can_delete = False
+    verbose_name_plural = 'Accounts'
 
 
-# class CustomizedUserAdmin(UserAdmin):
-#     inlines = (AccountInLine, )
+class CustomizedUserAdmin(UserAdmin):
+    inlines = (AccountInLine, )
 
 
-# admin.site.unregister(User)
-# admin.site.register(User, CustomizedUserAdmin)
+admin.site.unregister(User)
+admin.site.register(User, CustomizedUserAdmin)
+admin.site.register(Account)
 
 
 # class CustomUserAdmin(UserAdmin):

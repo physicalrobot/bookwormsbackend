@@ -7,6 +7,10 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from BookShelvesApp.serializers import BookShelfSerializer
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
+from .models import Account
+
 
 # from UsersApp.serializer import AccountSerializer
 # from .models import Account
@@ -22,6 +26,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # Add custom claims
         token['username'] = user.username
+        # token['account'] = user.account
         # token['book'] = user.objects.book
         # ...
 
@@ -45,3 +50,11 @@ def getRoutes(request):
     ]
 
     return Response(routes)
+
+# @permission_classes([IsAuthenticated])
+
+
+@api_view(['GET'])
+def getUser(request):
+    users = list(Account.objects.values())
+    return JsonResponse(users, safe=False)
