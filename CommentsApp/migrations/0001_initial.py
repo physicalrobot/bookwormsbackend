@@ -12,19 +12,16 @@ class Migration(migrations.Migration):
     dependencies = [
         ('BookClubsApp', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('BooksApp', '0001_initial'),
-        ('BookShelvesApp', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Account',
+            name='Comment',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('book', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='BooksApp.book')),
-                ('bookclubs', models.ManyToManyField(to='BookClubsApp.bookclub')),
-                ('bookshelf', models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to='BookShelvesApp.bookshelf')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('body', models.CharField(max_length=1000)),
+                ('bookclub', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='BookClubsApp.bookclub')),
+                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]
