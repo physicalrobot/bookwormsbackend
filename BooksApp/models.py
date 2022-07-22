@@ -13,4 +13,7 @@ def upload_path(instance, filename):
 class Book(models.Model):
     BookId = models.AutoField(primary_key=True)
     BookTitle = models.CharField(max_length=500)
+    BookAuthor = models.CharField(max_length=500)
     BookCover = models.ImageField(null=True, blank=True, upload_to=upload_path)
+    Synopsis = models.TextField(max_length=2000)
+    Rating = models.CharField(max_length=100, null=True, blank=True)
