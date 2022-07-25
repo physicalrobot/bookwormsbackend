@@ -24,7 +24,7 @@ from ReviewsApp.views import ReviewViewSet
 from BooksApp.views import BookViewSet
 from BookShelvesApp.views import BookShelfViewSet
 from rest_framework import routers
-
+from BooksApp.views import GenreViewSet
 
 from django.conf.urls import include
 
@@ -42,7 +42,9 @@ bookshelf = routers.DefaultRouter()
 bookshelf.register('bookshelf', BookShelfViewSet)
 
 account = routers.DefaultRouter()
+genres = routers.DefaultRouter()
 account.register('account', AccountViewSet)
+genres.register('genres',  GenreViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -51,6 +53,7 @@ urlpatterns = [
 
 
     # path('',  include('BooksApp.urls')),
+    path('', include(genres.urls)),
     path('', include(books.urls)),
     path('', include(reviews.urls)),
     path('', include(bookshelf.urls)),

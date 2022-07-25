@@ -1,31 +1,37 @@
 from django.shortcuts import render
-from django.views.decorators.csrf import  csrf_exempt
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
-from  django.http.response import JsonResponse
+from django.http.response import JsonResponse
 from rest_framework import viewsets
 
 
 from BooksApp.models import Book
-from BooksApp.serializers import BookSerializer
-from  django.http  import HttpResponse 
-from  rest_framework.decorators import api_view, permission_classes
-from  rest_framework.permissions import IsAuthenticated
-from django.core.files.storage import  default_storage
+from BooksApp.serializers import BookSerializer, GenreSerializer
+from django.http import HttpResponse
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from django.core.files.storage import default_storage
+from .models import Genre
 
+
+class GenreViewSet(viewsets.ModelViewSet):
+    # user = request.user
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializer
 
 
 class BookViewSet(viewsets.ModelViewSet):
     # user = request.user
     queryset = Book.objects.all()
-    serializer_class =  BookSerializer
+    serializer_class = BookSerializer
 
-    def post(self,request, *args,**kwargs):
+    def post(self, request, *args, **kwargs):
         bookcover = request.data['BookCover']
-        title  =  request.data['BookTitle']
+        title = request.data['BookTitle']
 
         Book.objects.create(BookTitle=title, BookCover=bookcover)
 
-        return  HttpResponse({'message':'Book created'},  status=200)
+        return HttpResponse({'message': 'Book created'},  status=200)
 
 
 # @csrf_exempt
@@ -40,7 +46,7 @@ class BookViewSet(viewsets.ModelViewSet):
 #         book_serializer = BookSerializer(data = book_data)
 #         if book_serializer.is_valid():
 #             book_serializer.save()
-#             return JsonResponse("Added Successfully!!",  safe=False)   
+#             return JsonResponse("Added Successfully!!",  safe=False)
 #         return JsonResponse("Failed to Add",  safe=False)
 
 #     elif request.method=='PUT':
@@ -61,7 +67,7 @@ class BookViewSet(viewsets.ModelViewSet):
 # def BookCoverUpload(request,id=0):
 #     if request.method == 'POST':
 #        book = Book.objects.get(BookId=id)
-       
+
 
 #     file  = request.FILES['BookCover']
 #     file_name =  default_storage.save(file.name,file)
