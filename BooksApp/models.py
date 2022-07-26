@@ -17,8 +17,10 @@ class Genre(models.Model):
 
 class Book(models.Model):
     BookId = models.AutoField(primary_key=True)
-    BookGenre = models.ForeignKey(
-        Genre, blank=True, null=True, on_delete=models.CASCADE)
+    BookGenre = models.ManyToManyField(Genre)
+
+    # BookGenre = models.ForeignKey(
+    #     Genre, blank=True, null=True, on_delete=models.CASCADE)
     BookTitle = models.CharField(max_length=500)
     BookAuthor = models.CharField(max_length=500)
     BookCover = models.ImageField(null=True, blank=True, upload_to=upload_path)
